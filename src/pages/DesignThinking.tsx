@@ -16,6 +16,7 @@ const DesignThinking = () => {
       title: 'Эмпатия',
       icon: 'Heart',
       color: 'bg-primary',
+      image: 'https://cdn.poehali.dev/projects/9a6b7cf2-329c-454d-80b5-2c0b54fa41fa/files/46154edd-4ece-43fc-a9ef-041c33be7b75.jpg',
       description: 'Глубокое понимание потребностей пользователей',
       methods: [
         {
@@ -40,6 +41,7 @@ const DesignThinking = () => {
       title: 'Фокусировка',
       icon: 'Target',
       color: 'bg-secondary',
+      image: 'https://cdn.poehali.dev/projects/9a6b7cf2-329c-454d-80b5-2c0b54fa41fa/files/b1e14149-f2b3-40c6-bb29-51bc3199883f.jpg',
       description: 'Формулирование проблемы на основе инсайтов',
       methods: [
         {
@@ -64,6 +66,7 @@ const DesignThinking = () => {
       title: 'Генерация идей',
       icon: 'Lightbulb',
       color: 'bg-accent',
+      image: 'https://cdn.poehali.dev/projects/9a6b7cf2-329c-454d-80b5-2c0b54fa41fa/files/0d120a52-23fb-4314-bfb9-5c67647917a8.jpg',
       description: 'Создание множества решений проблемы',
       methods: [
         {
@@ -88,6 +91,7 @@ const DesignThinking = () => {
       title: 'Прототипирование',
       icon: 'Box',
       color: 'bg-primary',
+      image: 'https://cdn.poehali.dev/projects/9a6b7cf2-329c-454d-80b5-2c0b54fa41fa/files/07f5e808-e095-4543-b121-f7ed589b84ec.jpg',
       description: 'Быстрое создание осязаемых версий решений',
       methods: [
         {
@@ -112,6 +116,7 @@ const DesignThinking = () => {
       title: 'Тестирование',
       icon: 'FlaskConical',
       color: 'bg-secondary',
+      image: 'https://cdn.poehali.dev/projects/9a6b7cf2-329c-454d-80b5-2c0b54fa41fa/files/7f05b02d-4297-4a1a-baff-d467f336b0ac.jpg',
       description: 'Проверка решений с реальными пользователями',
       methods: [
         {
@@ -217,10 +222,18 @@ const DesignThinking = () => {
 
             {phases.map((phase) => (
               <TabsContent key={phase.id} value={phase.id} className="mt-8">
-                <Card className="border-2">
-                  <CardHeader>
+                <Card className="border-2 overflow-hidden">
+                  <div className="relative h-64 w-full overflow-hidden">
+                    <img 
+                      src={phase.image} 
+                      alt={phase.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
+                  </div>
+                  <CardHeader className="-mt-20 relative z-10">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className={`w-16 h-16 ${phase.color} rounded-xl flex items-center justify-center`}>
+                      <div className={`w-16 h-16 ${phase.color} rounded-xl flex items-center justify-center shadow-lg`}>
                         <Icon name={phase.icon} size={32} className="text-white" />
                       </div>
                       <div>
