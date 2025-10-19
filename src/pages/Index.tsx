@@ -14,7 +14,7 @@ const Index = () => {
       icon: 'Lightbulb',
       description: 'Современные подходы к управлению проектами',
       color: 'bg-primary',
-      items: ['Agile', 'Scrum', 'Kanban', 'Lean', 'Design Thinking']
+      items: ['Design Thinking']
     },
     {
       id: 'tools',
