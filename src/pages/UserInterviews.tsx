@@ -567,7 +567,7 @@ const UserInterviews = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                     {steps[3].methods.map((method, idx) => (
                       <Card key={idx} className="border-2 hover:shadow-lg transition-shadow">
                         <CardHeader>
@@ -578,7 +578,7 @@ const UserInterviews = () => {
                           <CardDescription>{method.description}</CardDescription>
                         </CardHeader>
                         <CardContent>
-                          <ol className="space-y-2">
+                          <ol className="space-y-2 mb-6">
                             {method.steps.map((step, i) => (
                               <li key={i} className="flex items-start gap-3">
                                 <Badge variant="outline" className="shrink-0 mt-1">{i + 1}</Badge>
@@ -586,6 +586,124 @@ const UserInterviews = () => {
                               </li>
                             ))}
                           </ol>
+
+                          {/* Визуальный пример Affinity Map */}
+                          {method.name === 'Affinity Mapping' && (
+                            <div className="mt-6 p-6 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 rounded-lg border-2 border-dashed border-yellow-300 dark:border-yellow-700">
+                              <div className="flex items-center gap-2 mb-4">
+                                <Icon name="Lightbulb" size={20} className="text-yellow-600" />
+                                <h4 className="font-semibold text-sm">Визуальный пример</h4>
+                              </div>
+                              <div className="grid grid-cols-3 gap-4">
+                                {/* Группа 1 */}
+                                <div className="space-y-2">
+                                  <div className="bg-pink-200 dark:bg-pink-900/50 p-3 rounded shadow-sm text-xs font-medium border-l-4 border-pink-500">
+                                    🎯 Болевые точки
+                                  </div>
+                                  <div className="bg-pink-100 dark:bg-pink-900/30 p-2 rounded text-xs">"Слишком долго ищу нужную функцию"</div>
+                                  <div className="bg-pink-100 dark:bg-pink-900/30 p-2 rounded text-xs">"Не понимаю, где мои файлы"</div>
+                                  <div className="bg-pink-100 dark:bg-pink-900/30 p-2 rounded text-xs">"Часто делаю ошибки"</div>
+                                </div>
+
+                                {/* Группа 2 */}
+                                <div className="space-y-2">
+                                  <div className="bg-blue-200 dark:bg-blue-900/50 p-3 rounded shadow-sm text-xs font-medium border-l-4 border-blue-500">
+                                    💡 Потребности
+                                  </div>
+                                  <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded text-xs">"Хочу быстрый доступ"</div>
+                                  <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded text-xs">"Нужны подсказки"</div>
+                                  <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded text-xs">"Автосохранение важно"</div>
+                                </div>
+
+                                {/* Группа 3 */}
+                                <div className="space-y-2">
+                                  <div className="bg-green-200 dark:bg-green-900/50 p-3 rounded shadow-sm text-xs font-medium border-l-4 border-green-500">
+                                    ✅ Что работает
+                                  </div>
+                                  <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded text-xs">"Нравится простой дизайн"</div>
+                                  <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded text-xs">"Удобная навигация"</div>
+                                  <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded text-xs">"Быстро загружается"</div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Визуальный пример User Journey Map */}
+                          {method.name === 'User Journey Map' && (
+                            <div className="mt-6 p-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 rounded-lg border-2 border-dashed border-purple-300 dark:border-purple-700">
+                              <div className="flex items-center gap-2 mb-4">
+                                <Icon name="Map" size={20} className="text-purple-600" />
+                                <h4 className="font-semibold text-sm">Визуальный пример</h4>
+                              </div>
+                              <div className="overflow-x-auto">
+                                <div className="min-w-[600px]">
+                                  {/* Этапы */}
+                                  <div className="grid grid-cols-4 gap-3 mb-3">
+                                    <div className="bg-purple-200 dark:bg-purple-900/50 p-2 rounded text-center text-xs font-semibold">
+                                      1. Обнаружение
+                                    </div>
+                                    <div className="bg-purple-200 dark:bg-purple-900/50 p-2 rounded text-center text-xs font-semibold">
+                                      2. Регистрация
+                                    </div>
+                                    <div className="bg-purple-200 dark:bg-purple-900/50 p-2 rounded text-center text-xs font-semibold">
+                                      3. Первый опыт
+                                    </div>
+                                    <div className="bg-purple-200 dark:bg-purple-900/50 p-2 rounded text-center text-xs font-semibold">
+                                      4. Использование
+                                    </div>
+                                  </div>
+
+                                  {/* Действия */}
+                                  <div className="grid grid-cols-4 gap-3 mb-2">
+                                    <div className="bg-white dark:bg-slate-800 p-2 rounded border text-xs">
+                                      Увидел рекламу в соцсетях
+                                    </div>
+                                    <div className="bg-white dark:bg-slate-800 p-2 rounded border text-xs">
+                                      Заполнил форму регистрации
+                                    </div>
+                                    <div className="bg-white dark:bg-slate-800 p-2 rounded border text-xs">
+                                      Прошел онбординг
+                                    </div>
+                                    <div className="bg-white dark:bg-slate-800 p-2 rounded border text-xs">
+                                      Создал первый проект
+                                    </div>
+                                  </div>
+
+                                  {/* Эмоции */}
+                                  <div className="grid grid-cols-4 gap-3 mb-2">
+                                    <div className="flex items-center justify-center text-2xl">
+                                      🤔
+                                    </div>
+                                    <div className="flex items-center justify-center text-2xl">
+                                      😊
+                                    </div>
+                                    <div className="flex items-center justify-center text-2xl">
+                                      😕
+                                    </div>
+                                    <div className="flex items-center justify-center text-2xl">
+                                      😃
+                                    </div>
+                                  </div>
+
+                                  {/* Болевые точки */}
+                                  <div className="grid grid-cols-4 gap-3">
+                                    <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded text-xs border-l-2 border-green-500">
+                                      ✓ Яркий дизайн
+                                    </div>
+                                    <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded text-xs border-l-2 border-green-500">
+                                      ✓ Быстрая форма
+                                    </div>
+                                    <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded text-xs border-l-2 border-red-500">
+                                      ✗ Непонятные инструкции
+                                    </div>
+                                    <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded text-xs border-l-2 border-green-500">
+                                      ✓ Интуитивно понятно
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     ))}
