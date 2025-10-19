@@ -90,26 +90,26 @@ const Index = () => {
     }
   ];
 
-  const features = [
-    {
-      icon: 'Zap',
-      title: 'Быстрое обучение',
-      description: 'Интенсивные программы с практическим фокусом'
-    },
+  const designThinkingBenefits = [
     {
       icon: 'Users',
-      title: 'Командная работа',
-      description: 'Развитие навыков совместной работы'
+      title: 'Фокус на пользователе',
+      description: 'Решения создаются с учетом реальных потребностей людей'
     },
     {
-      icon: 'Award',
-      title: 'Сертификация',
-      description: 'Официальное подтверждение компетенций'
+      icon: 'Lightbulb',
+      title: 'Креативное мышление',
+      description: 'Поощрение новых идей и нестандартных подходов'
     },
     {
-      icon: 'TrendingUp',
-      title: 'Карьерный рост',
-      description: 'Развитие профессиональных навыков'
+      icon: 'Repeat',
+      title: 'Итеративный процесс',
+      description: 'Постоянное улучшение через прототипирование и тестирование'
+    },
+    {
+      icon: 'Users2',
+      title: 'Командная синергия',
+      description: 'Объединение разных точек зрения для лучших решений'
     }
   ];
 
@@ -159,36 +159,132 @@ const Index = () => {
             Современная платформа для обучения студентов эффективным методологиям, инструментам и практикам управления проектами
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="gap-2" onClick={() => {
+            <Button size="lg" className="gap-2" onClick={() => navigate('/design-thinking')}>
+              <Icon name="Lightbulb" size={20} />
+              Узнать о Design Thinking
+            </Button>
+            <Button size="lg" variant="outline" className="gap-2" onClick={() => {
               const element = document.getElementById('methodology');
               element?.scrollIntoView({ behavior: 'smooth' });
             }}>
-              <Icon name="Rocket" size={20} />
-              Начать обучение
-            </Button>
-            <Button size="lg" variant="outline" className="gap-2" onClick={() => navigate('/design-thinking')}>
-              <Icon name="PlayCircle" size={20} />
-              Посмотреть демо
+              <Icon name="BookOpen" size={20} />
+              Методы и инструменты
             </Button>
           </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mt-20">
-          {features.map((feature, index) => (
-            <Card 
-              key={index} 
-              className="border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Icon name={feature.icon} size={24} className="text-primary" />
+      {/* Design Thinking Block */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 px-4 py-2 bg-primary/10 text-primary border-primary/20">
+              Методология инноваций
+            </Badge>
+            <h3 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Что такое Design Thinking?
+            </h3>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Design Thinking — это человеко-ориентированный подход к инновациям, который объединяет потребности людей, 
+              технологические возможности и бизнес-требования для создания жизнеспособных решений.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <Card className="border-2 hover:shadow-xl transition-all">
+              <CardHeader>
+                <div className="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-4">
+                  <Icon name="Target" size={28} className="text-white" />
                 </div>
-                <h3 className="font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <CardTitle className="text-2xl">В чём суть?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  Design Thinking — это структурированный процесс решения сложных проблем через глубокое понимание 
+                  пользователей и их потребностей. Вместо того чтобы предполагать, что нужно людям, вы узнаете это 
+                  через исследования и тестирование.
+                </p>
+                <div className="flex items-start gap-3 pt-2">
+                  <Icon name="CheckCircle2" size={20} className="text-primary shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold">Эмпатия к пользователю</p>
+                    <p className="text-sm text-muted-foreground">Глубокое понимание проблем и контекста</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Icon name="CheckCircle2" size={20} className="text-primary shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold">Быстрое прототипирование</p>
+                    <p className="text-sm text-muted-foreground">Создание решений для быстрого тестирования</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Icon name="CheckCircle2" size={20} className="text-primary shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold">Итеративный подход</p>
+                    <p className="text-sm text-muted-foreground">Непрерывное улучшение на основе обратной связи</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-          ))}
+
+            <Card className="border-2 hover:shadow-xl transition-all">
+              <CardHeader>
+                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl flex items-center justify-center mb-4">
+                  <Icon name="Sparkles" size={28} className="text-white" />
+                </div>
+                <CardTitle className="text-2xl">В чём ценность?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  Применение Design Thinking позволяет командам создавать по-настоящему востребованные решения, 
+                  снижает риски провала продукта и повышает удовлетворённость пользователей.
+                </p>
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800">
+                    <Icon name="TrendingUp" size={20} className="text-green-600 shrink-0" />
+                    <p className="text-sm"><strong>80%</strong> компаний отмечают рост инноваций</p>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <Icon name="Target" size={20} className="text-blue-600 shrink-0" />
+                    <p className="text-sm"><strong>70%</strong> снижение времени на разработку</p>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                    <Icon name="Heart" size={20} className="text-purple-600 shrink-0" />
+                    <p className="text-sm"><strong>2x</strong> выше удовлетворённость клиентов</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {designThinkingBenefits.map((benefit, index) => (
+              <Card 
+                key={index} 
+                className="border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <CardContent className="pt-6 text-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Icon name={benefit.icon} size={24} className="text-primary" />
+                  </div>
+                  <h3 className="font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Button 
+              size="lg" 
+              className="gap-2"
+              onClick={() => navigate('/design-thinking')}
+            >
+              <Icon name="ArrowRight" size={20} />
+              Изучить методологию подробнее
+            </Button>
+          </div>
         </div>
       </section>
 
