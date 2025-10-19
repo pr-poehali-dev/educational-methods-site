@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,9 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activePhase, setActivePhase] = useState<number>(0);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
 
   const sections = [
     {
@@ -119,52 +122,81 @@ const Index = () => {
       name: 'Эмпатия',
       icon: 'Heart',
       color: 'from-red-500 to-pink-500',
+      solidColor: '#ef4444',
       bgColor: 'bg-red-50 dark:bg-red-950/20',
       borderColor: 'border-red-200 dark:border-red-800',
       description: 'Глубокое понимание пользователей и их потребностей',
-      activities: ['Интервью', 'Наблюдение', 'Погружение в контекст']
+      activities: ['Интервью', 'Наблюдение', 'Погружение в контекст'],
+      x: 50,
+      label: 'Старт'
     },
     {
       number: 2,
       name: 'Фокусировка',
       icon: 'Target',
       color: 'from-orange-500 to-yellow-500',
+      solidColor: '#f97316',
       bgColor: 'bg-orange-50 dark:bg-orange-950/20',
       borderColor: 'border-orange-200 dark:border-orange-800',
       description: 'Определение ключевой проблемы для решения',
-      activities: ['Синтез данных', 'Проблемные зоны', 'Инсайты']
+      activities: ['Синтез данных', 'Проблемные зоны', 'Инсайты'],
+      x: 250,
+      label: 'Проблема'
     },
     {
       number: 3,
       name: 'Генерация идей',
       icon: 'Lightbulb',
       color: 'from-yellow-500 to-green-500',
+      solidColor: '#eab308',
       bgColor: 'bg-yellow-50 dark:bg-yellow-950/20',
       borderColor: 'border-yellow-200 dark:border-yellow-800',
       description: 'Создание множества вариантов решений',
-      activities: ['Брейнсторминг', 'Crazy 8', 'Майнд-карты']
+      activities: ['Брейнсторминг', 'Crazy 8', 'Майнд-карты'],
+      x: 450,
+      label: 'Идеи'
     },
     {
       number: 4,
       name: 'Прототипирование',
       icon: 'Box',
       color: 'from-green-500 to-blue-500',
+      solidColor: '#22c55e',
       bgColor: 'bg-green-50 dark:bg-green-950/20',
       borderColor: 'border-green-200 dark:border-green-800',
       description: 'Быстрое создание материальных версий идей',
-      activities: ['Скетчи', 'Макеты', 'MVP']
+      activities: ['Скетчи', 'Макеты', 'MVP'],
+      x: 650,
+      label: 'Прототип'
     },
     {
       number: 5,
       name: 'Тестирование',
       icon: 'FlaskConical',
       color: 'from-blue-500 to-purple-500',
+      solidColor: '#3b82f6',
       bgColor: 'bg-blue-50 dark:bg-blue-950/20',
       borderColor: 'border-blue-200 dark:border-blue-800',
       description: 'Проверка решений с реальными пользователями',
-      activities: ['Юзабилити-тесты', 'Обратная связь', 'Итерации']
+      activities: ['Юзабилити-тесты', 'Обратная связь', 'Итерации'],
+      x: 850,
+      label: 'Решение'
     }
   ];
+
+  // Автоматическая анимация прохождения по этапам
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActivePhase((prev) => (prev + 1) % 5);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const startAnimation = () => {
+    setIsAnimating(true);
+    setActivePhase(0);
+    setTimeout(() => setIsAnimating(false), 15000);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
@@ -320,9 +352,8 @@ const Index = () => {
             
             <div className="relative max-w-5xl mx-auto">
               {/* Двойной алмаз SVG визуализация */}
-              <div className="mb-8 px-4">
-                <svg viewBox="0 0 1000 400" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
-                  {/* Первый алмаз (Discover + Define) - Красный/Оранжевый */}
+              <div className="mb-8 px-4 relative">
+                <svg viewBox="0 0 1000 450" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
                   <defs>
                     <linearGradient id="diamond1" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" style={{ stopColor: '#ef4444', stopOpacity: 0.2 }} />
@@ -332,6 +363,21 @@ const Index = () => {
                       <stop offset="0%" style={{ stopColor: '#22c55e', stopOpacity: 0.2 }} />
                       <stop offset="100%" style={{ stopColor: '#3b82f6', stopOpacity: 0.2 }} />
                     </linearGradient>
+                    
+                    {/* Анимированный градиент для пути */}
+                    <linearGradient id="pathGradient">
+                      <stop offset="0%" style={{ stopColor: '#ef4444', stopOpacity: 0.8 }} />
+                      <stop offset="100%" style={{ stopColor: '#3b82f6', stopOpacity: 0.8 }} />
+                    </linearGradient>
+
+                    {/* Пульсация для активной точки */}
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
                   </defs>
                   
                   {/* Первый алмаз (Проблема) */}
@@ -339,7 +385,7 @@ const Index = () => {
                     fill="url(#diamond1)" 
                     stroke="#ef4444" 
                     strokeWidth="3"
-                    className="transition-all duration-300 hover:fill-opacity-30"
+                    className={`transition-all duration-500 ${activePhase >= 0 && activePhase <= 1 ? 'opacity-100' : 'opacity-40'}`}
                   />
                   
                   {/* Второй алмаз (Решение) */}
@@ -347,23 +393,70 @@ const Index = () => {
                     fill="url(#diamond2)" 
                     stroke="#22c55e" 
                     strokeWidth="3"
-                    className="transition-all duration-300 hover:fill-opacity-30"
+                    className={`transition-all duration-500 ${activePhase >= 2 ? 'opacity-100' : 'opacity-40'}`}
                   />
                   
-                  {/* Центральная линия */}
+                  {/* Анимированная линия прогресса */}
+                  <line 
+                    x1="50" 
+                    y1="200" 
+                    x2={designThinkingPhases[activePhase]?.x || 50}
+                    y2="200" 
+                    stroke="url(#pathGradient)" 
+                    strokeWidth="6" 
+                    strokeLinecap="round"
+                    className="transition-all duration-1000 ease-in-out"
+                  />
+                  
+                  {/* Центральная пунктирная линия */}
                   <line x1="50" y1="200" x2="950" y2="200" 
                     stroke="currentColor" 
                     strokeWidth="2" 
                     strokeDasharray="5,5" 
-                    opacity="0.3"
+                    opacity="0.2"
                   />
                   
-                  {/* Точки ключевых моментов */}
-                  <circle cx="50" cy="200" r="8" fill="#ef4444" className="cursor-pointer hover:r-12 transition-all" />
-                  <circle cx="250" cy="200" r="8" fill="#f97316" className="cursor-pointer hover:r-12 transition-all" />
-                  <circle cx="450" cy="200" r="8" fill="#eab308" className="cursor-pointer hover:r-12 transition-all" />
-                  <circle cx="650" cy="200" r="8" fill="#22c55e" className="cursor-pointer hover:r-12 transition-all" />
-                  <circle cx="850" cy="200" r="8" fill="#3b82f6" className="cursor-pointer hover:r-12 transition-all" />
+                  {/* Интерактивные точки этапов */}
+                  {designThinkingPhases.map((phase, idx) => (
+                    <g key={idx}>
+                      {/* Точка */}
+                      <circle 
+                        cx={phase.x} 
+                        cy="200" 
+                        r={activePhase === idx ? 14 : hoveredPoint === idx ? 12 : 8}
+                        fill={phase.solidColor}
+                        className={`cursor-pointer transition-all duration-300 ${activePhase === idx ? 'animate-pulse' : ''}`}
+                        filter={activePhase === idx ? 'url(#glow)' : ''}
+                        onMouseEnter={() => setHoveredPoint(idx)}
+                        onMouseLeave={() => setHoveredPoint(null)}
+                        onClick={() => setActivePhase(idx)}
+                      />
+                      
+                      {/* Номер внутри точки */}
+                      <text 
+                        x={phase.x} 
+                        y="206" 
+                        textAnchor="middle" 
+                        className="fill-white font-bold text-xs pointer-events-none select-none"
+                      >
+                        {phase.number}
+                      </text>
+                      
+                      {/* Подпись под точкой */}
+                      <text 
+                        x={phase.x} 
+                        y="230" 
+                        textAnchor="middle" 
+                        className={`font-semibold text-sm transition-all duration-300 ${
+                          activePhase === idx || hoveredPoint === idx
+                            ? 'opacity-100 fill-current' 
+                            : 'opacity-60 fill-current'
+                        }`}
+                      >
+                        {phase.label}
+                      </text>
+                    </g>
+                  ))}
                   
                   {/* Подписи фаз */}
                   <text x="250" y="30" textAnchor="middle" className="fill-red-500 font-bold text-2xl">
@@ -374,77 +467,138 @@ const Index = () => {
                   </text>
                   
                   {/* Стрелки расширения/сужения */}
-                  <text x="150" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    Дивергенция
-                  </text>
-                  <text x="150" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    (Расширение)
-                  </text>
-                  
-                  <text x="350" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    Конвергенция
-                  </text>
-                  <text x="350" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    (Сужение)
-                  </text>
-                  
-                  <text x="550" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    Дивергенция
-                  </text>
-                  <text x="550" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    (Расширение)
-                  </text>
-                  
-                  <text x="750" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    Конвергенция
-                  </text>
-                  <text x="750" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
-                    (Сужение)
-                  </text>
+                  <g opacity="0.5">
+                    <text x="150" y="110" textAnchor="middle" className="fill-current text-sm">
+                      Дивергенция
+                    </text>
+                    <text x="150" y="290" textAnchor="middle" className="fill-current text-sm">
+                      (Расширение)
+                    </text>
+                    
+                    <text x="350" y="110" textAnchor="middle" className="fill-current text-sm">
+                      Конвергенция
+                    </text>
+                    <text x="350" y="290" textAnchor="middle" className="fill-current text-sm">
+                      (Сужение)
+                    </text>
+                    
+                    <text x="550" y="110" textAnchor="middle" className="fill-current text-sm">
+                      Дивергенция
+                    </text>
+                    <text x="550" y="290" textAnchor="middle" className="fill-current text-sm">
+                      (Расширение)
+                    </text>
+                    
+                    <text x="750" y="110" textAnchor="middle" className="fill-current text-sm">
+                      Конвергенция
+                    </text>
+                    <text x="750" y="290" textAnchor="middle" className="fill-current text-sm">
+                      (Сужение)
+                    </text>
+                  </g>
+
+                  {/* Иконки в углах алмазов */}
+                  <g opacity="0.3">
+                    {/* Эмпатия - верх первого алмаза */}
+                    <circle cx="250" cy="50" r="20" fill="#ef4444" opacity="0.2" />
+                    {/* Фокус - низ первого алмаза */}
+                    <circle cx="250" cy="350" r="20" fill="#f97316" opacity="0.2" />
+                    {/* Идеи - верх второго алмаза */}
+                    <circle cx="650" cy="50" r="20" fill="#22c55e" opacity="0.2" />
+                    {/* Тест - низ второго алмаза */}
+                    <circle cx="650" cy="350" r="20" fill="#3b82f6" opacity="0.2" />
+                  </g>
                 </svg>
+
+                {/* Кнопка управления анимацией */}
+                <div className="absolute top-0 right-4 z-10">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={startAnimation}
+                    className="gap-2"
+                  >
+                    <Icon name={isAnimating ? "Pause" : "Play"} size={16} />
+                    {isAnimating ? "Пауза" : "Запустить анимацию"}
+                  </Button>
+                </div>
               </div>
 
-              {/* Карточки этапов под алмазом */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {designThinkingPhases.slice(0, 4).map((phase, index) => (
+              {/* Информационная карточка активного этапа */}
+              <div className="mb-6">
+                <Card className={`border-2 ${designThinkingPhases[activePhase].borderColor} shadow-xl transition-all duration-500`}>
+                  <CardHeader>
+                    <div className="flex items-center gap-4">
+                      <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${designThinkingPhases[activePhase].color} flex items-center justify-center shadow-lg animate-pulse`}>
+                        <Icon name={designThinkingPhases[activePhase].icon} size={32} className="text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge variant="secondary">Этап {activePhase + 1} из 5</Badge>
+                          <CardTitle className="text-2xl">{designThinkingPhases[activePhase].name}</CardTitle>
+                        </div>
+                        <CardDescription className="text-base">
+                          {designThinkingPhases[activePhase].description}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className={`p-4 ${designThinkingPhases[activePhase].bgColor} rounded-lg border-2 ${designThinkingPhases[activePhase].borderColor}`}>
+                      <p className="font-semibold mb-3 flex items-center gap-2">
+                        <Icon name="Sparkles" size={18} />
+                        Ключевые активности:
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                        {designThinkingPhases[activePhase].activities.map((activity, idx) => (
+                          <div 
+                            key={idx} 
+                            className="flex items-center gap-2 p-2 bg-background/60 rounded border"
+                            style={{ animationDelay: `${idx * 100}ms` }}
+                          >
+                            <Icon name="CheckCircle2" size={16} className="text-primary shrink-0" />
+                            <span className="text-sm">{activity}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Карточки-превью всех этапов */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                {designThinkingPhases.map((phase, index) => (
                   <Card
                     key={index}
-                    className={`border-2 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-                      activeSection === phase.name ? `${phase.borderColor} shadow-xl scale-105` : 'border-border'
+                    className={`border-2 cursor-pointer transition-all duration-300 ${
+                      activePhase === index 
+                        ? `${phase.borderColor} shadow-lg scale-105 ring-2 ring-offset-2` 
+                        : 'border-border hover:shadow-md hover:-translate-y-1'
                     }`}
-                    onMouseEnter={() => setActiveSection(phase.name)}
-                    onMouseLeave={() => setActiveSection(null)}
+                    onClick={() => setActivePhase(index)}
+                    onMouseEnter={() => setHoveredPoint(index)}
+                    onMouseLeave={() => setHoveredPoint(null)}
                   >
-                    <CardHeader className="pb-3">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${phase.color} flex items-center justify-center shadow-lg shrink-0`}>
-                          <span className="text-lg font-bold text-white">{phase.number}</span>
-                        </div>
-                        <CardTitle className="text-base">{phase.name}</CardTitle>
+                    <CardContent className="pt-4 pb-4 text-center">
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${phase.color} flex items-center justify-center mx-auto mb-2 shadow-lg ${
+                        activePhase === index ? 'animate-bounce' : ''
+                      }`}>
+                        <Icon name={phase.icon} size={20} className="text-white" />
                       </div>
-                      <div className={`w-8 h-8 bg-gradient-to-br ${phase.color} rounded-lg flex items-center justify-center mx-auto`}>
-                        <Icon name={phase.icon} size={18} className="text-white" />
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-xs text-muted-foreground text-center mb-3">
-                        {phase.description}
-                      </p>
-                      
-                      <div className={`p-2 ${phase.bgColor} rounded-lg border ${phase.borderColor}`}>
-                        <p className="text-xs font-semibold mb-1.5">Активности:</p>
-                        <ul className="space-y-1">
-                          {phase.activities.map((activity, idx) => (
-                            <li key={idx} className="text-xs flex items-center gap-2">
-                              <div className="w-1 h-1 rounded-full bg-current shrink-0"></div>
-                              {activity}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <p className="font-semibold text-xs mb-1">{phase.name}</p>
+                      <Badge variant="outline" className="text-xs">
+                        {phase.label}
+                      </Badge>
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-sm text-muted-foreground">
+                  💡 Кликните на этап или точку на диаграмме, чтобы узнать больше. Анимация меняет этапы автоматически каждые 3 секунды.
+                </p>
               </div>
 
               {/* Описание модели */}
