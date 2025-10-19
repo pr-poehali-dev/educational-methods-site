@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const sections = [
@@ -198,7 +200,15 @@ const Index = () => {
                         </Badge>
                       ))}
                     </div>
-                    <Button className="w-full mt-6 gap-2">
+                    <Button 
+                      className="w-full mt-6 gap-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (section.id === 'methodology') {
+                          navigate('/design-thinking');
+                        }
+                      }}
+                    >
                       Перейти к материалам
                       <Icon name="ArrowRight" size={18} />
                     </Button>
