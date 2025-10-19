@@ -22,7 +22,8 @@ const DesignThinking = () => {
         {
           name: 'Интервью с пользователями',
           description: 'Глубинные беседы для выявления скрытых потребностей и болей',
-          tools: ['Гайд интервью', 'Диктофон', 'Заметки']
+          tools: ['Гайд интервью', 'Диктофон', 'Заметки'],
+          link: '/user-interviews'
         },
         {
           name: 'Наблюдение',
@@ -248,11 +249,18 @@ const DesignThinking = () => {
                     <h4 className="font-semibold text-lg mb-4">Методы и инструменты</h4>
                     <div className="grid gap-6">
                       {phase.methods.map((method, idx) => (
-                        <Card key={idx} className="hover:shadow-lg transition-shadow">
+                        <Card 
+                          key={idx} 
+                          className={`hover:shadow-lg transition-all ${method.link ? 'cursor-pointer hover:border-primary/50' : ''}`}
+                          onClick={() => method.link && navigate(method.link)}
+                        >
                           <CardHeader>
                             <CardTitle className="text-xl flex items-center gap-2">
                               <Icon name="CheckCircle2" size={20} className="text-primary" />
                               {method.name}
+                              {method.link && (
+                                <Icon name="ExternalLink" size={16} className="text-muted-foreground ml-auto" />
+                              )}
                             </CardTitle>
                             <CardDescription className="text-base">
                               {method.description}
@@ -268,6 +276,20 @@ const DesignThinking = () => {
                                 </Badge>
                               ))}
                             </div>
+                            {method.link && (
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="mt-4 gap-2"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(method.link);
+                                }}
+                              >
+                                <Icon name="BookOpen" size={16} />
+                                Подробнее о методике
+                              </Button>
+                            )}
                           </CardContent>
                         </Card>
                       ))}
