@@ -113,6 +113,59 @@ const Index = () => {
     }
   ];
 
+  const designThinkingPhases = [
+    {
+      number: 1,
+      name: 'Эмпатия',
+      icon: 'Heart',
+      color: 'from-red-500 to-pink-500',
+      bgColor: 'bg-red-50 dark:bg-red-950/20',
+      borderColor: 'border-red-200 dark:border-red-800',
+      description: 'Глубокое понимание пользователей и их потребностей',
+      activities: ['Интервью', 'Наблюдение', 'Погружение в контекст']
+    },
+    {
+      number: 2,
+      name: 'Фокусировка',
+      icon: 'Target',
+      color: 'from-orange-500 to-yellow-500',
+      bgColor: 'bg-orange-50 dark:bg-orange-950/20',
+      borderColor: 'border-orange-200 dark:border-orange-800',
+      description: 'Определение ключевой проблемы для решения',
+      activities: ['Синтез данных', 'Проблемные зоны', 'Инсайты']
+    },
+    {
+      number: 3,
+      name: 'Генерация идей',
+      icon: 'Lightbulb',
+      color: 'from-yellow-500 to-green-500',
+      bgColor: 'bg-yellow-50 dark:bg-yellow-950/20',
+      borderColor: 'border-yellow-200 dark:border-yellow-800',
+      description: 'Создание множества вариантов решений',
+      activities: ['Брейнсторминг', 'Crazy 8', 'Майнд-карты']
+    },
+    {
+      number: 4,
+      name: 'Прототипирование',
+      icon: 'Box',
+      color: 'from-green-500 to-blue-500',
+      bgColor: 'bg-green-50 dark:bg-green-950/20',
+      borderColor: 'border-green-200 dark:border-green-800',
+      description: 'Быстрое создание материальных версий идей',
+      activities: ['Скетчи', 'Макеты', 'MVP']
+    },
+    {
+      number: 5,
+      name: 'Тестирование',
+      icon: 'FlaskConical',
+      color: 'from-blue-500 to-purple-500',
+      bgColor: 'bg-blue-50 dark:bg-blue-950/20',
+      borderColor: 'border-blue-200 dark:border-blue-800',
+      description: 'Проверка решений с реальными пользователями',
+      activities: ['Юзабилити-тесты', 'Обратная связь', 'Итерации']
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <nav className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
@@ -256,6 +309,88 @@ const Index = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* 5 этапов Design Thinking - интерактивная визуализация */}
+          <div className="mb-12">
+            <h4 className="text-2xl font-bold text-center mb-8">5 этапов Design Thinking</h4>
+            <div className="relative">
+              {/* Соединительная линия */}
+              <div className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 opacity-20"></div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {designThinkingPhases.map((phase, index) => (
+                  <div
+                    key={index}
+                    className="relative group cursor-pointer"
+                    onMouseEnter={() => setActiveSection(phase.name)}
+                    onMouseLeave={() => setActiveSection(null)}
+                  >
+                    {/* Номер этапа */}
+                    <div className="flex justify-center mb-4">
+                      <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${phase.color} flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform relative z-10`}>
+                        <span className="text-2xl font-bold text-white">{phase.number}</span>
+                      </div>
+                    </div>
+
+                    {/* Карточка этапа */}
+                    <Card 
+                      className={`border-2 ${
+                        activeSection === phase.name 
+                          ? `${phase.borderColor} shadow-xl scale-105` 
+                          : 'border-border'
+                      } transition-all duration-300 h-full`}
+                    >
+                      <CardHeader className="text-center pb-3">
+                        <div className={`w-12 h-12 bg-gradient-to-br ${phase.color} rounded-lg flex items-center justify-center mx-auto mb-3 opacity-80`}>
+                          <Icon name={phase.icon} size={24} className="text-white" />
+                        </div>
+                        <CardTitle className="text-lg">{phase.name}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <p className="text-sm text-muted-foreground text-center mb-4 min-h-[60px]">
+                          {phase.description}
+                        </p>
+                        
+                        {/* Активности - показываются при наведении */}
+                        <div className={`space-y-2 transition-all duration-300 ${
+                          activeSection === phase.name 
+                            ? 'opacity-100 max-h-40' 
+                            : 'opacity-0 max-h-0 overflow-hidden'
+                        }`}>
+                          <div className={`p-3 ${phase.bgColor} rounded-lg border ${phase.borderColor}`}>
+                            <p className="text-xs font-semibold mb-2">Ключевые активности:</p>
+                            <ul className="space-y-1">
+                              {phase.activities.map((activity, idx) => (
+                                <li key={idx} className="text-xs flex items-center gap-2">
+                                  <div className="w-1 h-1 rounded-full bg-current shrink-0"></div>
+                                  {activity}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Стрелка вправо (только для десктопа и не для последнего элемента) */}
+                    {index < designThinkingPhases.length - 1 && (
+                      <div className="hidden lg:flex absolute top-20 -right-3 items-center justify-center z-20">
+                        <div className={`w-6 h-6 bg-gradient-to-r ${phase.color} rounded-full flex items-center justify-center shadow-lg`}>
+                          <Icon name="ArrowRight" size={14} className="text-white" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground mb-4">
+                💡 Наведите на карточку, чтобы увидеть ключевые активности этапа
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
