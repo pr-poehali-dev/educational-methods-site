@@ -311,85 +311,178 @@ const Index = () => {
             </Card>
           </div>
 
-          {/* 5 этапов Design Thinking - интерактивная визуализация */}
+          {/* Double Diamond - интерактивная визуализация */}
           <div className="mb-12">
-            <h4 className="text-2xl font-bold text-center mb-8">5 этапов Design Thinking</h4>
-            <div className="relative">
-              {/* Соединительная линия */}
-              <div className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 opacity-20"></div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                {designThinkingPhases.map((phase, index) => (
-                  <div
+            <h4 className="text-2xl font-bold text-center mb-4">Модель двойного алмаза</h4>
+            <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
+              Процесс Design Thinking состоит из двух фаз: исследование проблемы и разработка решения
+            </p>
+            
+            <div className="relative max-w-5xl mx-auto">
+              {/* Двойной алмаз SVG визуализация */}
+              <div className="mb-8 px-4">
+                <svg viewBox="0 0 1000 400" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+                  {/* Первый алмаз (Discover + Define) - Красный/Оранжевый */}
+                  <defs>
+                    <linearGradient id="diamond1" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style={{ stopColor: '#ef4444', stopOpacity: 0.2 }} />
+                      <stop offset="100%" style={{ stopColor: '#f97316', stopOpacity: 0.2 }} />
+                    </linearGradient>
+                    <linearGradient id="diamond2" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style={{ stopColor: '#22c55e', stopOpacity: 0.2 }} />
+                      <stop offset="100%" style={{ stopColor: '#3b82f6', stopOpacity: 0.2 }} />
+                    </linearGradient>
+                  </defs>
+                  
+                  {/* Первый алмаз (Проблема) */}
+                  <path d="M 50 200 L 250 50 L 450 200 L 250 350 Z" 
+                    fill="url(#diamond1)" 
+                    stroke="#ef4444" 
+                    strokeWidth="3"
+                    className="transition-all duration-300 hover:fill-opacity-30"
+                  />
+                  
+                  {/* Второй алмаз (Решение) */}
+                  <path d="M 450 200 L 650 50 L 850 200 L 650 350 Z" 
+                    fill="url(#diamond2)" 
+                    stroke="#22c55e" 
+                    strokeWidth="3"
+                    className="transition-all duration-300 hover:fill-opacity-30"
+                  />
+                  
+                  {/* Центральная линия */}
+                  <line x1="50" y1="200" x2="950" y2="200" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeDasharray="5,5" 
+                    opacity="0.3"
+                  />
+                  
+                  {/* Точки ключевых моментов */}
+                  <circle cx="50" cy="200" r="8" fill="#ef4444" className="cursor-pointer hover:r-12 transition-all" />
+                  <circle cx="250" cy="200" r="8" fill="#f97316" className="cursor-pointer hover:r-12 transition-all" />
+                  <circle cx="450" cy="200" r="8" fill="#eab308" className="cursor-pointer hover:r-12 transition-all" />
+                  <circle cx="650" cy="200" r="8" fill="#22c55e" className="cursor-pointer hover:r-12 transition-all" />
+                  <circle cx="850" cy="200" r="8" fill="#3b82f6" className="cursor-pointer hover:r-12 transition-all" />
+                  
+                  {/* Подписи фаз */}
+                  <text x="250" y="30" textAnchor="middle" className="fill-red-500 font-bold text-2xl">
+                    Открытие проблемы
+                  </text>
+                  <text x="650" y="30" textAnchor="middle" className="fill-green-500 font-bold text-2xl">
+                    Создание решения
+                  </text>
+                  
+                  {/* Стрелки расширения/сужения */}
+                  <text x="150" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    Дивергенция
+                  </text>
+                  <text x="150" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    (Расширение)
+                  </text>
+                  
+                  <text x="350" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    Конвергенция
+                  </text>
+                  <text x="350" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    (Сужение)
+                  </text>
+                  
+                  <text x="550" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    Дивергенция
+                  </text>
+                  <text x="550" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    (Расширение)
+                  </text>
+                  
+                  <text x="750" y="120" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    Конвергенция
+                  </text>
+                  <text x="750" y="280" textAnchor="middle" className="fill-current text-sm opacity-60">
+                    (Сужение)
+                  </text>
+                </svg>
+              </div>
+
+              {/* Карточки этапов под алмазом */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {designThinkingPhases.slice(0, 4).map((phase, index) => (
+                  <Card
                     key={index}
-                    className="relative group cursor-pointer"
+                    className={`border-2 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                      activeSection === phase.name ? `${phase.borderColor} shadow-xl scale-105` : 'border-border'
+                    }`}
                     onMouseEnter={() => setActiveSection(phase.name)}
                     onMouseLeave={() => setActiveSection(null)}
                   >
-                    {/* Номер этапа */}
-                    <div className="flex justify-center mb-4">
-                      <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${phase.color} flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform relative z-10`}>
-                        <span className="text-2xl font-bold text-white">{phase.number}</span>
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${phase.color} flex items-center justify-center shadow-lg shrink-0`}>
+                          <span className="text-lg font-bold text-white">{phase.number}</span>
+                        </div>
+                        <CardTitle className="text-base">{phase.name}</CardTitle>
                       </div>
-                    </div>
-
-                    {/* Карточка этапа */}
-                    <Card 
-                      className={`border-2 ${
-                        activeSection === phase.name 
-                          ? `${phase.borderColor} shadow-xl scale-105` 
-                          : 'border-border'
-                      } transition-all duration-300 h-full`}
-                    >
-                      <CardHeader className="text-center pb-3">
-                        <div className={`w-12 h-12 bg-gradient-to-br ${phase.color} rounded-lg flex items-center justify-center mx-auto mb-3 opacity-80`}>
-                          <Icon name={phase.icon} size={24} className="text-white" />
-                        </div>
-                        <CardTitle className="text-lg">{phase.name}</CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <p className="text-sm text-muted-foreground text-center mb-4 min-h-[60px]">
-                          {phase.description}
-                        </p>
-                        
-                        {/* Активности - показываются при наведении */}
-                        <div className={`space-y-2 transition-all duration-300 ${
-                          activeSection === phase.name 
-                            ? 'opacity-100 max-h-40' 
-                            : 'opacity-0 max-h-0 overflow-hidden'
-                        }`}>
-                          <div className={`p-3 ${phase.bgColor} rounded-lg border ${phase.borderColor}`}>
-                            <p className="text-xs font-semibold mb-2">Ключевые активности:</p>
-                            <ul className="space-y-1">
-                              {phase.activities.map((activity, idx) => (
-                                <li key={idx} className="text-xs flex items-center gap-2">
-                                  <div className="w-1 h-1 rounded-full bg-current shrink-0"></div>
-                                  {activity}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Стрелка вправо (только для десктопа и не для последнего элемента) */}
-                    {index < designThinkingPhases.length - 1 && (
-                      <div className="hidden lg:flex absolute top-20 -right-3 items-center justify-center z-20">
-                        <div className={`w-6 h-6 bg-gradient-to-r ${phase.color} rounded-full flex items-center justify-center shadow-lg`}>
-                          <Icon name="ArrowRight" size={14} className="text-white" />
-                        </div>
+                      <div className={`w-8 h-8 bg-gradient-to-br ${phase.color} rounded-lg flex items-center justify-center mx-auto`}>
+                        <Icon name={phase.icon} size={18} className="text-white" />
                       </div>
-                    )}
-                  </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <p className="text-xs text-muted-foreground text-center mb-3">
+                        {phase.description}
+                      </p>
+                      
+                      <div className={`p-2 ${phase.bgColor} rounded-lg border ${phase.borderColor}`}>
+                        <p className="text-xs font-semibold mb-1.5">Активности:</p>
+                        <ul className="space-y-1">
+                          {phase.activities.map((activity, idx) => (
+                            <li key={idx} className="text-xs flex items-center gap-2">
+                              <div className="w-1 h-1 rounded-full bg-current shrink-0"></div>
+                              {activity}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
-            </div>
 
-            <div className="mt-8 text-center">
-              <p className="text-sm text-muted-foreground mb-4">
-                💡 Наведите на карточку, чтобы увидеть ключевые активности этапа
-              </p>
+              {/* Описание модели */}
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="border-2 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-red-600 dark:text-red-400">
+                      <Icon name="Diamond" size={24} />
+                      Первый алмаз: Правильная проблема
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm mb-3">
+                      <strong>Эмпатия (расширение)</strong>: Изучаем пользователей, собираем максимум данных о их потребностях, контексте и поведении.
+                    </p>
+                    <p className="text-sm">
+                      <strong>Фокусировка (сужение)</strong>: Анализируем данные, выявляем паттерны и формулируем конкретную проблему для решения.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-950/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                      <Icon name="Diamond" size={24} />
+                      Второй алмаз: Правильное решение
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm mb-3">
+                      <strong>Генерация идей (расширение)</strong>: Создаём множество вариантов решений, используем креативные техники, не ограничиваем фантазию.
+                    </p>
+                    <p className="text-sm">
+                      <strong>Прототип + Тест (сужение)</strong>: Выбираем лучшие идеи, создаём прототипы и тестируем с пользователями для итераций.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
 
