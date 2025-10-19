@@ -408,30 +408,69 @@ const UserInterviews = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <div className="space-y-6">
-                    {steps[1].sections.map((section, idx) => (
-                      <Card key={idx} className="border-2 hover:shadow-lg transition-shadow">
-                        <CardHeader>
-                          <div className="flex items-center justify-between">
-                            <CardTitle className="text-xl flex items-center gap-2">
-                              <Icon name={section.icon} size={24} className="text-primary" />
-                              {section.name}
-                            </CardTitle>
-                            <Badge variant="secondary">{section.time}</Badge>
+                  <div className="relative">
+                    <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 via-primary to-purple-500"></div>
+                    
+                    <div className="space-y-12">
+                      {steps[1].sections.map((section, idx) => {
+                        const totalMinutes = idx === 0 ? 0 : 
+                          idx === 1 ? 5 : 
+                          idx === 2 ? 15 : 50;
+                        
+                        return (
+                          <div key={idx} className="relative pl-20">
+                            <div className="absolute left-0 top-0 flex flex-col items-center">
+                              <div className={`w-16 h-16 rounded-full flex items-center justify-center z-10 shadow-lg ${
+                                idx === 0 ? 'bg-blue-500' :
+                                idx === 1 ? 'bg-green-500' :
+                                idx === 2 ? 'bg-purple-500' :
+                                'bg-orange-500'
+                              }`}>
+                                <Icon name={section.icon} size={28} className="text-white" />
+                              </div>
+                              <div className="mt-2 text-xs font-semibold text-muted-foreground text-center">
+                                {totalMinutes} мин
+                              </div>
+                            </div>
+
+                            <Card className="border-2 hover:shadow-xl transition-all hover:border-purple-500/50">
+                              <CardHeader>
+                                <div className="flex items-center justify-between">
+                                  <CardTitle className="text-2xl">{section.name}</CardTitle>
+                                  <Badge variant="secondary" className="text-sm px-3 py-1">
+                                    {section.time}
+                                  </Badge>
+                                </div>
+                              </CardHeader>
+                              <CardContent>
+                                <ul className="space-y-3">
+                                  {section.content.map((item, i) => (
+                                    <li key={i} className="flex items-start gap-3 group">
+                                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                                        <Icon name="Check" size={14} className="text-primary" />
+                                      </div>
+                                      <span className="text-sm leading-relaxed">{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </CardContent>
+                            </Card>
                           </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-2">
-                            {section.content.map((item, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <Icon name="ArrowRight" size={16} className="text-primary mt-1 shrink-0" />
-                                <span className="text-sm">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    ))}
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-8 p-4 bg-muted/30 rounded-lg border-2 border-dashed ml-20">
+                      <div className="flex items-center gap-3">
+                        <Icon name="Clock" size={24} className="text-primary" />
+                        <div>
+                          <p className="font-semibold">Общая длительность: 45-60 минут</p>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Гибко управляйте временем в зависимости от ответов респондента
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
